@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Image Processor | Convert, Extract & Edit</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-image"></i>
+                <span>ImagePro</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="hero">
+            <h1>Advanced Image Processing</h1>
+            <p>Convert formats, extract text, remove backgrounds, and adjust file size</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="tool-section">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Upload Image</h2>
+            <div id="uploadArea" class="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-image"></i>
+                    <p>Drag & drop your image here or</p>
+                    <button id="browseBtn" class="btn btn-primary">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                </div>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <div id="imagePreviewContainer" class="preview-container hidden">
+                <h3>Original Image Preview</h3>
+                <img id="originalPreview" class="image-preview">
+                <div class="file-info">
+                    <p>Format: <span id="originalFormat">-</span></p>
+                    <p>Dimensions: <span id="originalDimensions">-</span></p>
+                    <p>Size: <span id="originalSize">-</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tool Buttons -->
+        <section class="tool-buttons">
+            <div class="btn-group">
+                <button id="convertBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-exchange-alt"></i> Convert
+                </button>
+                <button id="extractTextBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-font"></i> Extract Text
+                </button>
+                <button id="removeBgBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-cut"></i> Remove BG
+                </button>
+                <button id="resizeBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-expand-alt"></i> Resize
+                </button>
+                <button id="compressBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-compress-alt"></i> Compress
+                </button>
+            </div>
+        </section>
+
+        <!-- Conversion Options -->
+        <section id="convertSection" class="tool-section hidden">
+            <h2><i class="fas fa-exchange-alt"></i> Convert Image</h2>
+            <div class="options-row">
+                <select id="formatSelect" class="form-select">
+                    <option value="jpg">JPG</option>
+                    <option value="png">PNG</option>
+                    <option value="webp">WebP</option>
+                </select>
+                <button id="startConvertBtn" class="btn btn-action">
+                    <i class="fas fa-play"></i> Start Conversion
+                </button>
+            </div>
+            <div class="progress-container hidden" id="convertProgress">
+                <div class="progress-info">
+                    <span id="convertStatus">Converting...</span>
+                    <span id="convertPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="convertedResult" class="result-container hidden">
+                <h3>Converted Image</h3>
+                <img id="convertedPreview" class="image-preview">
+                <div class="file-info">
+                    <p>New Format: <span id="newFormat">-</span></p>
+                    <p>New Size: <span id="newSize">-</span></p>
+                </div>
+                <a id="downloadConverted" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </section>
+
+        <!-- Text Extraction -->
+        <section id="extractSection" class="tool-section hidden">
+            <h2><i class="fas fa-font"></i> Extract Text</h2>
+            <div class="options-row">
+                <select id="languageSelect" class="form-select">
+                    <option value="eng">English</option>
+                    <option value="ben">Bengali</option>
+                    <option value="hin">Hindi</option>
+                    <option value="spa">Spanish</option>
+                    <option value="fra">French</option>
+                </select>
+                <button id="startExtractBtn" class="btn btn-action">
+                    <i class="fas fa-play"></i> Extract Text
+                </button>
+            </div>
+            <div class="progress-container hidden" id="extractProgress">
+                <div class="progress-info">
+                    <span id="extractStatus">Extracting text...</span>
+                    <span id="extractPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="extractedTextResult" class="result-container hidden">
+                <h3>Extracted Text</h3>
+                <textarea id="extractedText" placeholder="Extracted text will appear here..."></textarea>
+                <button id="copyTextBtn" class="btn btn-secondary">
+                    <i class="fas fa-copy"></i> Copy Text
+                </button>
+            </div>
+        </section>
+
+        <!-- Background Removal -->
+        <section id="removeBgSection" class="tool-section hidden">
+            <h2><i class="fas fa-cut"></i> Remove Background</h2>
+            <div class="options-row">
+                <select id="bgRemovalMethod" class="form-select">
+                    <option value="automatic">Automatic Removal</option>
+                    <option value="manual">Manual Color Selection</option>
+                </select>
+                <div id="colorPickerContainer" class="hidden">
+                    <label for="bgColorToRemove">Select Color:</label>
+                    <input type="color" id="bgColorToRemove" value="#ffffff">
+                </div>
+            </div>
+            <button id="startRemoveBgBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Remove Background
+            </button>
+            <div class="progress-container hidden" id="removeBgProgress">
+                <div class="progress-info">
+                    <span id="removeBgStatus">Removing background...</span>
+                    <span id="removeBgPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="bgRemovedResult" class="result-container hidden">
+                <h3>Background Removed</h3>
+                <img id="bgRemovedPreview" class="image-preview">
+                <div class="file-info">
+                    <p>New Size: <span id="bgRemovedSize">-</span></p>
+                </div>
+                <a id="downloadBgRemoved" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </section>
+
+        <!-- File Size Adjustment -->
+        <section id="sizeAdjustSection" class="tool-section hidden">
+            <h2><i class="fas fa-weight-hanging"></i> Adjust File Size</h2>
+            <div class="options-row">
+                <div class="size-control">
+                    <label for="sizeUnit">Unit:</label>
+                    <select id="sizeUnit" class="form-select">
+                        <option value="kb">KB</option>
+                        <option value="mb">MB</option>
+                    </select>
+                </div>
+                <div class="size-control">
+                    <label for="targetSize">Target Size:</label>
+                    <input type="number" id="targetSize" min="10" step="10" value="100" class="form-input">
+                </div>
+            </div>
+            <div class="quality-control">
+                <label for="qualitySlider">Quality: <span id="qualityValue">80</span>%</label>
+                <input type="range" id="qualitySlider" min="10" max="100" value="80" class="slider">
+            </div>
+            <button id="startSizeAdjustBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Adjust Size
+            </button>
+            <div class="progress-container hidden" id="sizeAdjustProgress">
+                <div class="progress-info">
+                    <span id="sizeAdjustStatus">Adjusting size...</span>
+                    <span id="sizeAdjustPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="sizeAdjustedResult" class="result-container hidden">
+                <h3>Size Adjusted Image</h3>
+                <img id="sizeAdjustedPreview" class="image-preview">
+                <div class="file-info">
+                    <p>Original Size: <span id="originalSizeDisplay">-</span></p>
+                    <p>New Size: <span id="newSizeDisplay">-</span></p>
+                    <p>Reduction: <span id="sizeReduction">-</span></p>
+                </div>
+                <a id="downloadSizeAdjusted" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ImagePro</h3>
+                    <p>Your complete image processing solution.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 ImagePro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
