@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Image Processor | Convert, Extract & Edit</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -17,14 +18,36 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="pdf-word.html"><i class="fas fa-file-pdf"></i> PDF to Word</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
+     <!-- Live Chat Button -->
+    <div class="live-chat-btn" id="chatButton">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <h3>Live Chat Support</h3>
+            <button class="close-chat" id="closeChat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message received">
+                <div class="message-content">Hello! How can we help you today?</div>
+                <div class="message-time">10:00 AM</div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
     <!-- Main Content -->
     <main class="container">
         <section class="hero">
@@ -224,7 +247,7 @@
     <!-- Footer Section -->
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
+            <!-- <div class="footer-content">
                 <div class="footer-section">
                     <h3>ImagePro</h3>
                     <p>Your complete image processing solution.</p>
@@ -247,7 +270,7 @@
                         <a href="#"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="footer-bottom">
                 <p>&copy; 2023 ImagePro. All rights reserved.</p>
             </div>
@@ -259,5 +282,6 @@
     
     <!-- Main JavaScript -->
     <script src="js/script.js"></script>
+    <script src="js/contact.js"></script>
 </body>
 </html>

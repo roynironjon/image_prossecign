@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced File Converter | Image, PDF, Word</title>
+    <link rel="stylesheet" href="css/pd.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.min.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                <span>FileConverter</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="pdf-word.html"><i class="fas fa-file-pdf"></i> PDF to Word</a></li>
+                    <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="hero pdf-hero">
+            <h1>Advanced File Conversion</h1>
+            <p>Convert between images, PDFs, and Word documents with ease</p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="tool-section">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Upload File</h2>
+            <div id="uploadArea" class="upload-area">
+                <div class="upload-content">
+                    <i class="fas fa-file-upload"></i>
+                    <p>Drag & drop your file here or</p>
+                    <button id="browseBtn" class="btn btn-primary">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                </div>
+                <input type="file" id="fileInput" accept="image/*,.pdf,.doc,.docx">
+            </div>
+            <div id="filePreviewContainer" class="preview-container hidden">
+                <h3>File Preview</h3>
+                <div id="filePreview"></div>
+                <div class="file-info">
+                    <p>Type: <span id="fileType">-</span></p>
+                    <p>Size: <span id="fileSize">-</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tool Buttons -->
+        <section class="tool-buttons">
+            <div class="btn-group">
+                <button id="imageToPdfBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-file-pdf"></i> Image to PDF
+                </button>
+                <button id="pdfToWordBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-file-word"></i> PDF to Word
+                </button>
+                <button id="wordToPdfBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-file-pdf"></i> Word to PDF
+                </button>
+                <button id="compressBtn" class="btn btn-tool" disabled>
+                    <i class="fas fa-compress-alt"></i> Compress
+                </button>
+            </div>
+        </section>
+
+        <!-- Image to PDF Section -->
+        <section id="imageToPdfSection" class="tool-section hidden">
+            <h2><i class="fas fa-file-pdf"></i> Image to PDF</h2>
+            <div class="options-row">
+                <label for="pdfOrientation">Orientation:</label>
+                <select id="pdfOrientation" class="form-select">
+                    <option value="portrait">Portrait</option>
+                    <option value="landscape">Landscape</option>
+                </select>
+                <label for="pdfMargin">Margin (mm):</label>
+                <input type="number" id="pdfMargin" min="0" max="50" value="10" class="form-input">
+            </div>
+            <button id="startImageToPdfBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Convert to PDF
+            </button>
+            <div class="progress-container hidden" id="imageToPdfProgress">
+                <div class="progress-info">
+                    <span id="imageToPdfStatus">Converting...</span>
+                    <span id="imageToPdfPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="imageToPdfResult" class="result-container hidden">
+                <h3>PDF Created</h3>
+                <div class="file-info">
+                    <p>PDF Size: <span id="pdfSize">-</span></p>
+                </div>
+                <a id="downloadPdf" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+            </div>
+        </section>
+        <!-- PDF to Word Section -->
+        <section id="pdfToWordSection" class="tool-section hidden">
+            <h2><i class="fas fa-file-word"></i> PDF to Word</h2>
+            <div class="options-row">
+                <label for="wordFormat">Format:</label>
+                <select id="wordFormat" class="form-select">
+                    <option value="docx">DOCX (Word 2007+)</option>
+                    <option value="doc">DOC (Word 97-2003)</option>
+                </select>
+            </div>
+            <button id="startPdfToWordBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Convert to Word
+            </button>
+            <div class="progress-container hidden" id="pdfToWordProgress">
+                <div class="progress-info">
+                    <span id="pdfToWordStatus">Converting...</span>
+                    <span id="pdfToWordPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="pdfToWordResult" class="result-container hidden">
+                <h3>Word Document Created</h3>
+                <div class="file-info">
+                    <p>Document Size: <span id="wordSize">-</span></p>
+                </div>
+                <a id="downloadWord" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download Word
+                </a>
+            </div>
+        </section>
+
+        <!-- Word to PDF Section -->
+        <section id="wordToPdfSection" class="tool-section hidden">
+            <h2><i class="fas fa-file-pdf"></i> Word to PDF</h2>
+            <div class="options-row">
+                <label for="pdfQuality">Quality:</label>
+                <select id="pdfQuality" class="form-select">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <button id="startWordToPdfBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Convert to PDF
+            </button>
+            <div class="progress-container hidden" id="wordToPdfProgress">
+                <div class="progress-info">
+                    <span id="wordToPdfStatus">Converting...</span>
+                    <span id="wordToPdfPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="wordToPdfResult" class="result-container hidden">
+                <h3>PDF Created</h3>
+                <div class="file-info">
+                    <p>PDF Size: <span id="wordPdfSize">-</span></p>
+                </div>
+                <a id="downloadWordPdf" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+            </div>
+        </section>
+
+        <!-- File Compression Section -->
+        <section id="compressSection" class="tool-section hidden">
+            <h2><i class="fas fa-compress-alt"></i> Compress File</h2>
+            <div class="options-row">
+                <label for="compressionLevel">Compression Level:</label>
+                <select id="compressionLevel" class="form-select">
+                    <option value="low">Low (Best Quality)</option>
+                    <option value="medium" selected>Medium (Balanced)</option>
+                    <option value="high">High (Smallest Size)</option>
+                </select>
+            </div>
+            <div class="quality-control">
+                <label for="compressQualitySlider">Quality: <span id="compressQualityValue">80</span>%</label>
+                <input type="range" id="compressQualitySlider" min="10" max="100" value="80" class="slider">
+            </div>
+            <button id="startCompressBtn" class="btn btn-action">
+                <i class="fas fa-play"></i> Compress File
+            </button>
+            <div class="progress-container hidden" id="compressProgress">
+                <div class="progress-info">
+                    <span id="compressStatus">Compressing...</span>
+                    <span id="compressPercent">0%</span>
+                </div>
+                <progress value="0" max="100"></progress>
+            </div>
+            <div id="compressResult" class="result-container hidden">
+                <h3>Compressed File</h3>
+                <div class="file-info">
+                    <p>Original Size: <span id="originalCompressSize">-</span></p>
+                    <p>New Size: <span id="compressedSize">-</span></p>
+                    <p>Reduction: <span id="compressReduction">-</span></p>
+                </div>
+                <a id="downloadCompressed" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download Compressed
+                </a>
+            </div>
+        </section>
+    </main>
+    <!-- Live Chat Button -->
+    <div class="live-chat-btn" id="chatButton">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <h3>Live Chat Support</h3>
+            <button class="close-chat" id="closeChat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message received">
+                <div class="message-content">Hello! How can we help you today?</div>
+                <div class="message-time">10:00 AM</div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <!-- Footer Section -->
+    <footer class="main-footer">
+        <div class="container">
+            <!-- <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FileConverter</h3>
+                    <p>Your complete file conversion solution.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div> -->
+            <div class="footer-bottom">
+                <p>&copy; 2023 FileConverter. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="js/contact.js"></script>
+    <script src="js/pdf.js"></script>
+    
+</body>
+</html>

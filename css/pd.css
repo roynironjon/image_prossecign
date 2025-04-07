@@ -1,5 +1,5 @@
 /* Base Styles */
-:root {
+/* :root {
     --primary-color: #4361ee;
     --secondary-color: #3a0ca3;
     --accent-color: #f72585;
@@ -41,7 +41,7 @@ body {
 }
 
 /* Header Styles */
-.main-header {
+/* .main-header {
     background-color: var(--primary-color);
     color: var(--white);
     padding: 15px 0;
@@ -93,12 +93,12 @@ body {
 
 .main-nav a:hover {
     color: var(--accent-color);
-}
+} */
 
 /* Hero Section */
-.hero {
+.hero,.pdf-hero {
     text-align: center;
-    padding: 120px 0 120px;
+    padding: 90px 0 90px !important;
 }
 
 .hero h1 {
@@ -176,6 +176,42 @@ body {
 
 .file-info p {
     margin-bottom: 5px;
+}
+
+/* Preview Container */
+.preview-container {
+    margin-top: 20px;
+}
+
+.preview-container h3 {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+#filePreview {
+    max-width: 100%;
+    max-height: 400px;
+    overflow: auto;
+    margin: 0 auto;
+    border: 1px solid var(--gray-color);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+#filePreview img {
+    max-width: 100%;
+    max-height: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+#filePreview embed,
+#filePreview iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
 }
 
 /* Tool Buttons */
@@ -311,12 +347,6 @@ body {
     margin-bottom: 20px;
 }
 
-.size-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .quality-control {
     margin-bottom: 20px;
 }
@@ -346,31 +376,6 @@ body {
     border-radius: 50%;
     background: var(--primary-color);
     cursor: pointer;
-}
-
-/* Preview Containers */
-.preview-container {
-    margin-top: 20px;
-}
-
-.preview-container h3 {
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    color: var(--text-light);
-}
-
-.image-preview {
-    max-width: 100%;
-    max-height: 400px;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    display: block;
-    margin: 0 auto;
-}
-
-.result-container {
-    margin-top: 20px;
-    text-align: center;
 }
 
 /* Progress Bars */
@@ -404,49 +409,10 @@ progress::-webkit-progress-value {
     transition: width 0.3s ease;
 }
 
-/* Text Extraction */
-textarea {
-    width: 100%;
-    min-height: 150px;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--gray-color);
-    font-family: inherit;
-    font-size: 1rem;
-    resize: vertical;
-    margin-bottom: 15px;
-    transition: var(--transition);
-}
-
-textarea:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
-}
-
-/* Color Picker */
-#colorPickerContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-input[type="color"] {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 50%;
+/* Result Containers */
+.result-container {
+    margin-top: 20px;
+    text-align: center;
 }
 
 /* Footer Styles */
@@ -564,10 +530,6 @@ input[type="color"]::-webkit-color-swatch {
     }
 
     .form-select, .form-input {
-        width: 100%;
-    }
-
-    .size-control {
         width: 100%;
     }
 }
